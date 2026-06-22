@@ -1,35 +1,43 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from django.http import Http404
 
+from blog.models import Post
 
 
 
 def index(request):
-    posts_reversed = posts[::-1]
-    return render(request, 'blog/index.html', {'posts': posts_reversed})
+    template = 'blog\index.html'
+    post_detail = Post.objects.values(
+        'id',
+        'title',
+        'description'
+    )
+    context = {
+        'post_detail': post_detail,
+    }
+    return render(request, template, context)
 
 
-def post_detail(request, post_id):
-    posts_dict = {post['id']: post for post in posts}
-    post = posts_dict.get(post_id)
-    if post is None:
-        raise Http404('Пост не найден')
-    return render(request, 'blog/detail.html', {'post': post})
+def post_detail(request, pk):
+    template = 'blog\detail.html'
+    post_detail = get_object_or_404(
+        Post.objects.values(
+            'title',
+            'description'
+        ).filter(is_published=True),
+        pk=pk
+    )
+    context = {
+        'post_detail': post_detail,
+    }
+    return render(request, template, context)
 
 
 def category_posts(request, category_slug):
-    filtered = [p for p in posts if p['category'] == category_slug]
-    if not filtered:
-        return render(request, 'blog/category.html', {
-            'posts': [],
-            'category_slug': category_slug
-        })
-    filtered_reversed = filtered[::-1]
-    return render(request, 'blog/category.html', {
-        'posts': filtered_reversed,
-        'category_slug': category_slug
-    })
-
-# по-другому не получалось иначе
-# не пройду проверки
+    template = 'blog\category.html'
+    
+    context = {
+        'post_detail': post_detail,
+    }
+    return render(request, template, context)
