@@ -1,43 +1,36 @@
 from django.shortcuts import get_object_or_404, render
 
-from django.http import Http404
-
-from blog.models import Post
-
+from blog.models import Post, Category
 
 
 def index(request):
-    template = 'blog\index.html'
-    post_detail = Post.objects.values(
-        'id',
-        'title',
-        'description'
-    )
+    template = 'blog/index.html'
+    post_list = Post.objects.select_related('author').filter(
+        is_published=True
+    ).order_by('-pub_date')
     context = {
-        'post_detail': post_detail,
+        'post_list': post_list,
     }
     return render(request, template, context)
 
 
 def post_detail(request, pk):
     template = 'blog\detail.html'
-    post_detail = get_object_or_404(
-        Post.objects.values(
-            'title',
-            'description'
-        ).filter(is_published=True),
-        pk=pk
+    post = get_object_or_404(
+        Post.objects.filter(pk=pk, is_published=True)
     )
     context = {
-        'post_detail': post_detail,
+        'post': post,
     }
     return render(request, template, context)
 
 
-def category_posts(request, category_slug):
-    template = 'blog\category.html'
-    
+def category(request, category_slug):
+    template = 'blog/category.html'
+    category = get_object_or_404(Category, slug=category_slug)
+    posts = Post.objects.filter(category=category, is_published=True)
     context = {
-        'post_detail': post_detail,
+        'category': category,
+        'posts': posts,
     }
     return render(request, template, context)
