@@ -6,7 +6,8 @@ from blog.models import Post, Category
 def index(request):
     template = 'blog/index.html'
     post_list = Post.objects.select_related('author').filter(
-        is_published=True
+        is_published=True,
+        category__is_published=True
     ).order_by('-pub_date')
     context = {
         'post_list': post_list,
@@ -28,9 +29,9 @@ def post_detail(request, pk):
 def category(request, category_slug):
     template = 'blog/category.html'
     category = get_object_or_404(Category, slug=category_slug)
-    posts = Post.objects.filter(category=category, is_published=True)
+    post_list = Post.objects.filter(category=category, is_published=True).select_related('category')
     context = {
         'category': category,
-        'posts': posts,
+        'post_list': post_list,
     }
     return render(request, template, context)
