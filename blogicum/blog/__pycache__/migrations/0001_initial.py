@@ -17,7 +17,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Category',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_published', models.BooleanField(default=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('title', models.CharField(max_length=256)),
@@ -31,7 +32,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Location',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_published', models.BooleanField(default=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('name', models.CharField(max_length=256)),
@@ -43,15 +45,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Post',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_published', models.BooleanField(default=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('title', models.CharField(max_length=256)),
                 ('text', models.TextField()),
                 ('pub_date', models.DateTimeField()),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='blog.category')),
-                ('location', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='blog.location')),
+                ('author', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('category', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.SET_NULL, to='blog.category')),
+                ('location', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.SET_NULL, to='blog.location')),
             ],
             options={
                 'abstract': False,
