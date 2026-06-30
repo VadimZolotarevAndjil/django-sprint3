@@ -58,7 +58,7 @@ class Post(Blog):
 
     def __str__(self):
         return self.title
-    
+
 
 # Тематическая категория
 class Category(Blog):
