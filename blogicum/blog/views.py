@@ -5,7 +5,6 @@ from django.utils import timezone
 from blog.models import Post, Category
 
 
-
 def index(request):
     template = "blog/index.html"
     post_list = (
@@ -23,7 +22,6 @@ def index(request):
     return render(request, template, context)
 
 
-
 def post_detail(request, pk):
     template = "blog/detail.html"
     post = get_object_or_404(
@@ -38,7 +36,6 @@ def post_detail(request, pk):
         "post": post,
     }
     return render(request, template, context)
-
 
 
 def category(request, category_slug):

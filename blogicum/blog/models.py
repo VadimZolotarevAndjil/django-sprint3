@@ -3,6 +3,7 @@ from django.db import models
 
 User = get_user_model()
 
+
 class Blog(models.Model):
     is_published = models.BooleanField(
         default=True,
@@ -18,6 +19,7 @@ class Blog(models.Model):
         abstract = True
         verbose_name = "Блог"
         verbose_name_plural = "Блоги"
+
 
 class Post(Blog):
     title = models.CharField(
@@ -81,6 +83,7 @@ class Category(Blog):
 
     def __str__(self):
         return self.title
+
 
 # Географическая метка
 class Location(Blog):
