@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from constants import MAX_LENGTH
+
 User = get_user_model()
 
 
-class Blog(models.Model):
+class BaseContent(models.Model):
     is_published = models.BooleanField(
         default=True,
         verbose_name="Опубликовано",
@@ -21,9 +23,9 @@ class Blog(models.Model):
         verbose_name_plural = "Блоги"
 
 
-class Post(Blog):
+class Post(BaseContent):
     title = models.CharField(
-        max_length=256,
+        max_length=MAX_LENGTH,
         verbose_name="Заголовок"
     )
     text = models.TextField(verbose_name="Текст")
@@ -61,9 +63,9 @@ class Post(Blog):
 
 
 # Тематическая категория
-class Category(Blog):
+class Category(BaseContent):
     title = models.CharField(
-        max_length=256,
+        max_length=MAX_LENGTH,
         verbose_name="Заголовок"
     )
     description = models.TextField(verbose_name="Описание")
@@ -86,9 +88,9 @@ class Category(Blog):
 
 
 # Географическая метка
-class Location(Blog):
+class Location(BaseContent):
     name = models.CharField(
-        max_length=256,
+        max_length=MAX_LENGTH,
         verbose_name="Название места"
     )
 
