@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from constants import MAX_LENGTH, PUBLICATION_DAYS
+from .constants import MAX_LENGTH, PUBLICATION_DAYS
 
 User = get_user_model()
 
