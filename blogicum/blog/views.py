@@ -30,6 +30,7 @@ def index(request):
 
 def post_detail(request, pk):
     template = "blog/detail.html"
+    post = get_object_or_404(Post, id=pk)
     post = get_object_or_404(
          Post.objects.select_related("category").# filter(
         #     pk=pk,

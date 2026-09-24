@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from constants import MAX_LENGTH
+from constants import MAX_LENGTH, PUBLICATION_DAYS
 
 User = get_user_model()
 
@@ -53,6 +53,10 @@ class Post(BaseContent):
         null=True,
         verbose_name="Категория"
     )
+
+    @property
+    def recent_published(self):
+        return Post.objects.order_by("-pub_date")[:PUBLICATION_DAYS]
 
     class Meta:
         verbose_name = "публикация"
