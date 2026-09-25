@@ -2,8 +2,6 @@ from django.contrib import admin
 
 from .models import Post, Category, Location
 
-admin.site.register(Location)
-
 
 class PostModelAdmin(admin.ModelAdmin):
     list_display = (
