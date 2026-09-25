@@ -2,19 +2,18 @@ from django.contrib import admin
 
 from .models import Post, Category, Location
 
-admin.site.register(Post)
 admin.site.register(Category)
 admin.site.register(Location)
 
-@admin.register()
+
 class PostModelAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "short_description",
+        "text",
         "pub_date"
     )
 
-    def short_description(self, obj):
+    def text(self, obj):
         text = obj.description or ""
         if len(text) > 100:
             return text [:100] + "…"
@@ -31,7 +30,7 @@ class PostModelAdmin(admin.ModelAdmin):
         "category"
     )
     list_display_links = (
-        "title"
+        "title",
     )
 
 admin.site.register(Post, PostModelAdmin) 
