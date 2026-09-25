@@ -10,7 +10,8 @@ admin.site.register(Location)
 class PostModelAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "short_description"
+        "short_description",
+        "pub_date"
     )
 
     def short_description(self, obj):
@@ -19,12 +20,17 @@ class PostModelAdmin(admin.ModelAdmin):
             return text [:100] + "…"
         return text
 
-    list_editable = (
-
+    search_fields = (
+        "title",
+        "author",
+        "location",
+        "category"
+    )
+    list_filter = (
+        "location",
+        "category"
+    )
+    list_display_links = (
+        "title"
     )
 
-@admin.register()
-class CategoryModelAdmin(admin.ModelAdmin):
-
-@admin.register()
-class LocationModelAdmin(admin.ModelAdmin):
