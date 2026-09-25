@@ -34,6 +34,8 @@ class PostModelAdmin(admin.ModelAdmin):
         "title"
     )
 
+admin.site.register(Post, PostModelAdmin) 
+
 # @admin.register()
 # class CategoryModelAdmin(admin.ModelAdmin):
 
