@@ -68,6 +68,6 @@ class LocationModelAdmin(admin.ModelAdmin):
         )
 
 
-admin.site.register(Category, CategoryModelAdmin)
+admin.site.register(Post, PostModelAdmin)
 admin.site.register(Category, CategoryModelAdmin)
 admin.site.register(Location, LocationModelAdmin)
