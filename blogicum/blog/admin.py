@@ -1,6 +1,24 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth import get_user_model
 
 from .models import Post, Category, Location
+
+class CustomUserAdmin(BaseUserAdmin):
+    list_display = (
+        "username",
+        "email",
+        "is_staff",
+        "is_active"
+    )
+    list_filter = (
+        "is_staff",
+        "is_active"
+    )
+    search_fields = (
+        "username",
+        "email"
+    )
 
 
 class PostModelAdmin(admin.ModelAdmin):
@@ -65,6 +83,9 @@ class LocationModelAdmin(admin.ModelAdmin):
             "name",
         )
 
+User = get_user_model()
+admin.site.unregister(User)  # Сначала убираем стандартную регистрацию
+admin.site.register(User, CustomUserAdmin)  # Потом регистрируем с нашим классом 
 
 admin.site.register(Post, PostModelAdmin)
 admin.site.register(Category, CategoryModelAdmin)
