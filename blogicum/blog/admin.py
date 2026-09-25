@@ -34,8 +34,6 @@ class PostModelAdmin(admin.ModelAdmin):
         "title",
     )
 
-admin.site.register(Post, PostModelAdmin) 
-
 
 class CategoryModelAdmin(admin.ModelAdmin):
     list_display = (
@@ -61,7 +59,15 @@ class CategoryModelAdmin(admin.ModelAdmin):
     list_display_links = (
             "title",
         )
+
+
+
+class LocationModelAdmin(admin.ModelAdmin):
+    list_display = (
+            "name",
+        )
+
+
 admin.site.register(Category, CategoryModelAdmin)
-
-
-# class LocationModelAdmin(admin.ModelAdmin):
+admin.site.register(Category, CategoryModelAdmin)
+admin.site.register(Location, LocationModelAdmin)
