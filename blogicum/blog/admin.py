@@ -80,7 +80,6 @@ class CategoryModelAdmin(admin.ModelAdmin):
         )
 
 
-
 class LocationModelAdmin(admin.ModelAdmin):
     list_display = (
             "name",
