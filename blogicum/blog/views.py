@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 
 from blog.models import Post, Category
+from .constants import PUBLICATION_DAYS
 
 
 def get_published_posts(category=None):
@@ -12,11 +13,12 @@ def get_published_posts(category=None):
     ).select_related("author")
     if category:
         qs = qs.filter(category=category)
+    qs = qs.order_by("-pub_date")
     return qs
 
 
 def index(request):
-    post_list = get_published_posts()
+    post_list = get_published_posts()[:PUBLICATION_DAYS]  # ровно 5 последних
     return render(request, "blog/index.html", {"post_list": post_list})
 
 
@@ -25,6 +27,8 @@ def post_detail(request, pk):
         Post.objects.select_related("category", "author"),
         id=pk,
         is_published=True,
+        pub_date__lte=timezone.now(),
+        category__is_published=True,
     )
     return render(request, "blog/detail.html", {"post": post})
 
