@@ -18,7 +18,7 @@ def get_published_posts(category=None):
 
 
 def index(request):
-    post_list = get_published_posts()[:PUBLICATION_DAYS]  # ровно 5 последних
+    post_list = get_published_posts()[:PUBLICATION_DAYS]
     return render(request, "blog/index.html", {"post_list": post_list})
 
 
