@@ -1,10 +1,7 @@
-from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 
-
 from blog.models import Post, Category
-
 
 
 def get_published_posts(category=None):
@@ -27,18 +24,19 @@ def post_detail(request, pk):
     post = get_object_or_404(
         Post.objects.select_related("category", "author"),
         id=pk,
-        is_published=True
+        is_published=True,
     )
     return render(request, "blog/detail.html", {"post": post})
 
 
 def category(request, category_slug):
     template = "blog/category.html"
-    category = get_object_or_404(Category, slug=category_slug, is_published=True)
-    post_list = get_published_posts(category=category)
+    category_obj = get_object_or_404(
+        Category, slug=category_slug, is_published=True
+    )
+    post_list = get_published_posts(category=category_obj)
     context = {
-        "category": category,
+        "category": category_obj,
         "post_list": post_list,
     }
     return render(request, template, context)
-
