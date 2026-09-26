@@ -12,15 +12,15 @@ class CustomUserAdmin(BaseUserAdmin):
         "username",
         "email",
         "is_staff",
-        "is_active"
+        "is_active",
     )
     list_filter = (
         "is_staff",
-        "is_active"
+        "is_active",
     )
     search_fields = (
         "username",
-        "email"
+        "email",
     )
 
 
@@ -28,7 +28,7 @@ class PostModelAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "get_short_text",
-        "pub_date"
+        "pub_date",
     )
 
     def get_short_text(self, obj):
@@ -36,56 +36,46 @@ class PostModelAdmin(admin.ModelAdmin):
         if len(text) > 100:
             return text[:100] + "…"
         return text
-    
+
     get_short_text.short_description = "Текст"
 
     search_fields = (
         "title",
         "author",
         "location",
-        "category"
+        "category",
     )
     list_filter = (
         "location",
-        "category"
+        "category",
     )
-    list_display_links = (
-        "title",
-    )
+    list_display_links = ("title",)
 
 
 class CategoryModelAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "get_short_description"
+        "get_short_description",
     )
 
     def get_short_description(self, obj):
         description = obj.description or ""
         if len(description) > 100:
-            return description [:100] + "…"
+            return description[:100] + "…"
         return description
 
     get_short_description.short_description = "Описание"
 
-    search_fields = (
-        "title",
-    )
-    list_filter = (
-        "slug",
-    )
-
-    list_display_links = (
-            "title",
-        )
+    search_fields = ("title",)
+    list_filter = ("slug",)
+    list_display_links = ("title",)
 
 
 class LocationModelAdmin(admin.ModelAdmin):
-    list_display = (
-            "name",
-        )
+    list_display = ("name",)
 
-admin.site.unregister(Group) 
+
+admin.site.unregister(Group)
 
 User = get_user_model()
 admin.site.unregister(User)
