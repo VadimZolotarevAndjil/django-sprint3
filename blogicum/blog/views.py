@@ -24,11 +24,8 @@ def index(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(
-        Post.objects.select_related("category", "author"),
+        get_published_posts().select_related("category"),
         id=pk,
-        is_published=True,
-        pub_date__lte=timezone.now(),
-        category__is_published=True,
     )
     return render(request, "blog/detail.html", {"post": post})
 
